@@ -28,7 +28,7 @@ Educational Management System
 |  address  |   地址   | string |  200  |   N   |                                               |
 | desc_code | 介绍代码 | number |  10   |   N   | FK,[<EMS_DESC_INF>](#介绍信息表 '介绍信息表') |
 | dept_code | 学院代码 | number |   4   |   N   | FK,[<EMS_DEPT_INF>](#学院信息表 '学院信息表') |
-|   state   |   状态   | number |   1   |   N   | 0-未激活 1-正常 2-注销 3-锁定                 |
+|  status   |   状态   | number |   1   |   N   | 0-未激活 1-正常 2-注销 3-锁定                 |
 
 ### 学生信息表
 
@@ -128,9 +128,39 @@ Educational Management System
 
 > 表名：EMS_CRS_TIME
 
-|   字段名   |   含义   |  类型  | 长度  | 空值  | 约束 |
-| :--------: | :------: | :----: | :---: | :---: | ---- |
-|  time_no   | 时间编号 | number |  10   |   N   | PK   |
-| start_date | 开始日期 | number |   8   |   N   |      |
-|  end_date  | 结束日期 | number |   8   |   N   |      |
-| time_type  | 类型名称 | string |  20   |   Y   |      |
+|   字段名   |   含义   |  类型  | 长度  | 空值  | 约束                     |
+| :--------: | :------: | :----: | :---: | :---: | ------------------------ |
+|  time_no   | 时间编号 | number |  10   |   N   | PK                       |
+| start_date | 开始日期 | number |   8   |   N   |                          |
+|  end_date  | 结束日期 | number |   8   |   N   |                          |
+| time_type  | 类型名称 | string |  20   |   Y   |                          |
+|   status   | 当前状态 | number |   1   |   N   | 0-未激活，1-正常，2-锁定 |
+
+### 建筑物信息
+
+> 表名：EMS_BUILD_INF
+
+|    字段名     |    含义    |  类型  | 长度  | 空值  | 约束                                          |
+| :-----------: | :--------: | :----: | :---: | :---: | --------------------------------------------- |
+|   build_no    | 建筑物编号 | number |   8   |   N   | PK                                            |
+|  build_name   | 建筑物名字 | string |  20   |   N   |                                               |
+| build_address | 建筑物地址 | string |  200  |   N   |                                               |
+|    manager    |  管理人员  | string |  200  |   N   |                                               |
+|  connect_inf  |  联系信息  | string |  200  |   N   |                                               |
+|  build_date   |  建成日期  | number |   8   |   N   |                                               |
+|     floor     |   楼层数   | number |   3   |   N   |                                               |
+|   desc_code   |  介绍代码  | number |  10   |   N   | FK,[<EMS_DESC_INF>](#介绍信息表 '介绍信息表') |
+|    status     |  当前状态  | number |   1   |   N   | 0-未激活，1-正常，2-锁定                      |
+
+### 教室信息
+
+> 表名：EMS_BUILD_ROOM
+
+|   字段名   |    含义    |  类型  | 长度  | 空值  | 约束                                           |
+| :--------: | :--------: | :----: | :---: | :---: | ---------------------------------------------- |
+|  room_no   |  教室编号  | number |   4   |   N   | PK                                             |
+| room_type  |  教室类型  | string |  20   |   N   |                                                |
+| room_floor | 所在楼层数 | number |   3   |   N   |                                                |
+|  capacity  |  容纳人数  | number |   5   |   N   |                                                |
+|  build_no  | 建筑物编号 | number |  10   |   N   | FK,[<EMS_BUILD_INF>](#建筑物信息 '建筑物信息') |
+|   status   |  当前状态  | number |   1   |   N   | 0-未激活，1-正常，2-锁定                       |
