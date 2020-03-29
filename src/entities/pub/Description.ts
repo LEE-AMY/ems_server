@@ -19,7 +19,7 @@ export class Description extends BaseEntity {
     @Type(() => String)
     descDetail: string
 
-    @Length(0, 20)
+    @Length(0, 60)
     @Type(() => String)
     author: string
 

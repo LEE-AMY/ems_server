@@ -1,5 +1,5 @@
 import { BaseEntity } from "../BaseEntity";
-import { Length } from "class-validator";
+import { Length, IsIn } from "class-validator";
 import { Type } from "class-transformer";
 
 export class Profession  extends BaseEntity {
@@ -20,6 +20,9 @@ export class Profession  extends BaseEntity {
     @Type(() => String)
     descCode: string
 
+    @IsIn([0, 1, 2, 3])
+    @Type(() => Number)
+    status: number = 0
 
     public static transform(plainObj: object) {
         return super.baseTransform(this, plainObj)

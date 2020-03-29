@@ -1,12 +1,24 @@
-import * as building from "./building"
-import * as dept from "./dept"
-import * as pub from "./pub"
-import * as user from "./user"
+import { Building, Room, RoomUsed } from "./building"
+import { ClassC, Course, Department, Profession } from "./dept"
+import { CourseTab, Description, OptCourse, Term, Time } from "./pub"
+import { Admin, Student, Teacher, UserInf } from "./user"
 
 
-export default {
-    ...building,
-    ...dept,
-    ...pub,
-    ...user
+export {
+    Building,
+    Room,
+    RoomUsed,
+    ClassC,
+    Course,
+    Department,
+    Profession,
+    CourseTab,
+    Description,
+    OptCourse,
+    Term,
+    Time,
+    Admin,
+    Student,
+    Teacher,
+    UserInf
 }

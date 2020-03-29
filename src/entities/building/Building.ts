@@ -4,14 +4,13 @@ import { Type } from "class-transformer";
 
 export class Building extends BaseEntity {
 
-    @Length(5, 10)
+    @Length(1, 4)
     @Type(() => String)
     buildNo: string
 
     @Length(2, 20)
     @Type(() => String)
     buildName: string
-
 
     @Length(2, 200)
     @Type(() => String)
@@ -37,7 +36,7 @@ export class Building extends BaseEntity {
     @Type(() => String)
     descCode: string
 
-    @IsIn([0, 1, 2])
+    @IsIn([0, 1, 2, 3])
     @Type(() => Number)
     status: number = 0
 

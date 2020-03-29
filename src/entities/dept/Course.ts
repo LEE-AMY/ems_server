@@ -12,16 +12,22 @@ export class Course extends BaseEntity {
     @Type(() => String)
     crsName: string
 
-
     @Min(0)
     @Max(10)
     @Type(() => Number)
     crsScore: number
 
+    @Length(2, 10)
+    @Type(() => String)
+    crsType: string
+
     @Min(0)
     @Max(100)
     @Type(() => Number)
     crsTime: number
+
+    @Type(() => String)
+    crsPre: string
 
     @Length(5, 10)
     @Type(() => String)

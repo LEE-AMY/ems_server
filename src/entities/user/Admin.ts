@@ -6,7 +6,7 @@ export class Admin extends BaseEntity {
 
     @Length(1, 10)
     @Type(() => String)
-    account: string
+    adminNo: string
 
     @Length(6, 50)
     @Type(() => String)

@@ -1,13 +1,13 @@
-import { DayLayout } from "./DayLayout"
+import { CourseTab } from "./CourseTab"
 import { Description } from "./Description"
+import { OptCourse } from "./OptCourse"
 import { Term } from "./Term"
-import { TimeDBD } from "./TimeDBD"
-import { WeekTime } from "./WeekTime"
+import { Time } from "./Time"
 
 export {
-    DayLayout,
+    CourseTab,
     Description,
+    OptCourse,
     Term,
-    TimeDBD,
-    WeekTime
+    Time
 }
