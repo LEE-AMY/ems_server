@@ -12,10 +12,36 @@ export class AdminService {
             return errs
         }
 
+        const acc = await this.findByAccount(admin.adminNo)
+        if (acc.length > 0) {
+            return [`账号${admin.adminNo}已存在`]
+        }
+
         return await AdminModel.create(admin)
+    }
+
+    public static async delete(adminNo: string) {
+        return await AdminModel.deleteOne({ adminNo })
     }
 
     public static async findByAccount(adminNo: string) {
         return await AdminModel.find({ adminNo })
+    }
+
+    public static async edit(adminNo: string, admin: Admin) {
+        admin = Admin.transform(admin)
+
+        const errs = await admin.validateThis(true)
+
+        if (errs.length > 0) {
+            return errs
+        }
+
+        return await AdminModel.updateOne({ adminNo }, admin)
+    }
+
+    public static async loginValidate(adminNo: string, pwd: string) {
+        const result = await AdminModel.findOne({ adminNo, pwd, status: 1 })
+        return result
     }
 }

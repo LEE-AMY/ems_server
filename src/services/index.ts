@@ -1,4 +1,6 @@
-import { LoginService } from "./LoginService"
-export default {
-    LoginService
+
+import { AdminService } from "./AdminService"
+
+export {
+    AdminService
 }

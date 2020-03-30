@@ -1,9 +1,13 @@
 import "reflect-metadata"
-import Express from "express";
+import Express from "express"
+import cookieParser from "cookie-parser"
 import apiRout from "./routes"
+
 
 const port = 9527;
 const app = Express();
+
+app.use(cookieParser())
 
 app.use(Express.json())
 

@@ -1,9 +1,9 @@
-import Mongoose from "mongoose"
+import mongoose from "mongoose"
 import { Admin } from "../entities"
 
-export interface IAdmin extends Admin, Mongoose.Document { }
+export interface IAdmin extends Admin, mongoose.Document { }
 
-const AdminSchema = new Mongoose.Schema<IAdmin>({
+const AdminSchema = new mongoose.Schema<IAdmin>({
     adminNo: String,
     pwd: String,
     name: String,
@@ -13,5 +13,5 @@ const AdminSchema = new Mongoose.Schema<IAdmin>({
     versionKey: false
 })
 
-export default Mongoose.model<IAdmin>("EMS_USER_ADMIN", AdminSchema)
+export default mongoose.model<IAdmin>("ems_user_admin", AdminSchema)
 
