@@ -1,12 +1,11 @@
 import { BaseEntity } from "../BaseEntity";
-import { Length, Min, Max, IsIn } from "class-validator";
+import { Length, Min, Max, IsIn, IsNotEmpty } from "class-validator";
 import { Type } from "class-transformer";
 
+/**
+ * 时间安排计划类
+ */
 export class Time extends BaseEntity {
-
-    @Length(1, 10)
-    @Type(() => String)
-    timeNo: string
 
     @Length(1, 20)
     @Type(() => String)
@@ -20,9 +19,8 @@ export class Time extends BaseEntity {
     @Type(() => String)
     timeEnd: string
 
-    @Length(1, 10)
-    @Type(() => String)
-    termNo: string
+    @IsNotEmpty({ message: "学期_id不能为空" })
+    termID: string
 
     public static transform(plainObj: object) {
         return super.baseTransform(this, plainObj)

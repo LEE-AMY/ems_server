@@ -1,12 +1,8 @@
 import { BaseEntity } from "../BaseEntity";
-import { Length } from "class-validator";
+import { Length, IsEmail, IsNotEmpty } from "class-validator";
 import { Type } from "class-transformer";
 
 export class Department extends BaseEntity {
-
-    @Length(1, 4)
-    @Type(() => String)
-    deptCode: string
 
     @Length(1, 60)
     @Type(() => String)
@@ -20,12 +16,12 @@ export class Department extends BaseEntity {
     @Type(() => String)
     phone: string
 
-    @Type(() => String)
+    @IsEmail()
     email: string
 
-    @Length(1, 10)
+    @IsNotEmpty({ message: "学院描述ID不能为空" })
     @Type(() => String)
-    descCode: string
+    descID: string
 
     public static transform(plainObj: object) {
         return super.baseTransform(this, plainObj)

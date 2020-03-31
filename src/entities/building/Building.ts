@@ -1,6 +1,7 @@
 import { BaseEntity } from "../BaseEntity";
-import { Length, Min, Max, IsIn } from "class-validator";
+import { Length, Min, Max, IsIn, IsInt } from "class-validator";
 import { Type } from "class-transformer";
+import { status } from "../../types";
 
 export class Building extends BaseEntity {
 
@@ -16,29 +17,26 @@ export class Building extends BaseEntity {
     @Type(() => String)
     buildAddress: string
 
-    @Length(2, 200)
     @Type(() => String)
-    manager: string
+    manager?: string
 
-    @Length(2, 200)
     @Type(() => String)
-    connectInf: string
+    connectInf?: string
 
     @Type(() => Number)
-    buildDate: number
+    buildDate: number = new Date().getTime()
 
+    @IsInt({ message: "建筑层数必须为整数" })
     @Min(1)
-    @Max(500)
     @Type(() => Number)
     floor: number
 
-    @Length(5, 10)
-    @Type(() => String)
-    descCode: string
-
-    @IsIn([0, 1, 2, 3])
+    @IsIn(status)
     @Type(() => Number)
     status: number = 0
+
+    @Type(() => String)
+    descID?: string
 
     public static transform(plainObj: object) {
         return super.baseTransform(this, plainObj)

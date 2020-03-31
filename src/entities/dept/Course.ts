@@ -1,12 +1,11 @@
 import { BaseEntity } from "../BaseEntity";
-import { Length, Min, Max } from "class-validator";
+import { Length, Min, Max, IsNotEmpty } from "class-validator";
 import { Type } from "class-transformer";
 
+/**
+ * 课程名称类
+ */
 export class Course extends BaseEntity {
-
-    @Length(5, 10)
-    @Type(() => String)
-    crsCode: string
 
     @Length(2, 100)
     @Type(() => String)
@@ -27,11 +26,11 @@ export class Course extends BaseEntity {
     crsTime: number
 
     @Type(() => String)
-    crsPre: string
+    crsPre?: string
 
-    @Length(5, 10)
+    @IsNotEmpty({ message: "课程描述ID不能为空" })
     @Type(() => String)
-    descCode: string
+    descID: string
 
     public static transform(plainObj: object) {
         return super.baseTransform(this, plainObj)

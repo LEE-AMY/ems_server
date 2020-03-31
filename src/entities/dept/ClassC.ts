@@ -1,28 +1,27 @@
 import { BaseEntity } from "../BaseEntity";
-import { Length, Min, Max, IsIn } from "class-validator";
+import { Length, Min, Max, IsIn, IsInt, IsNotEmpty } from "class-validator";
 import { Type } from "class-transformer";
+import { status } from "../../types";
 
+/**
+ * 班级类
+ */
 export class ClassC extends BaseEntity {
 
-    @Length(5, 10)
-    @Type(() => String)
-    clsNo: string
-
+    @IsInt({ message: "学生人数必须为整数" })
     @Max(100000)
     @Min(0)
     @Type(() => Number)
     stuCnt: number = 0
 
-    @Length(5, 10)
-    @Type(() => String)
-    proCode: string
+    @IsNotEmpty({ message: "专业ID不能为空" })
+    proID: string
 
 
-    @Length(5, 10)
-    @Type(() => String)
+    @IsNotEmpty({ message: "教师ID不能为空" })
     tchNo: string
 
-    @IsIn([0, 1, 2, 3])
+    @IsIn(status)
     @Type(() => Number)
     status: number = 0
 

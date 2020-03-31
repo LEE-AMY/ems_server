@@ -21,7 +21,8 @@ export class AdminService {
     }
 
     public static async delete(adminNo: string) {
-        return await AdminModel.deleteOne({ adminNo })
+        await AdminModel.deleteOne({ adminNo })
+        return true
     }
 
     public static async findByAccount(adminNo: string) {
@@ -41,7 +42,7 @@ export class AdminService {
     }
 
     public static async loginValidate(adminNo: string, pwd: string) {
-        const result = await AdminModel.findOne({ adminNo, pwd, status: 1 })
+        const result = await AdminModel.findOne({ adminNo, pwd })
         return result
     }
 }

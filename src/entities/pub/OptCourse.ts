@@ -1,23 +1,21 @@
 import { BaseEntity } from "../BaseEntity";
-import { Length, Min, Max, IsIn } from "class-validator";
+import { Length, Min, Max, IsIn, IsNotEmpty } from "class-validator";
 import { Type } from "class-transformer";
+import { status } from "../../types";
 
+/**
+ * 选课记录类
+ */
 export class OptCourse extends BaseEntity {
-    @Length(1, 10)
-    @Type(() => String)
-    optNo: string
 
-    @Length(5, 10)
-    @Type(() => String)
-    crsNo: string
+    @IsNotEmpty({ message: "课程ID不能为空" })
+    crsID: string
 
-    @Length(1, 10)
-    @Type(() => String)
-    termNo: string
+    @IsNotEmpty({ message: "学期ID不能为空" })
+    termID: string
 
-    @Length(5, 10)
-    @Type(() => String)
-    stuNo: string
+    @IsNotEmpty({ message: "选课学生ID不能为空" })
+    stuID: string
 
     @Min(0)
     @Max(9999)
@@ -29,7 +27,7 @@ export class OptCourse extends BaseEntity {
     @Type(() => Number)
     score: number = 0
 
-    @IsIn([0, 1, 2, 3])
+    @IsIn(status)
     @Type(() => Number)
     status: number = 0
 

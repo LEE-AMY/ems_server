@@ -1,6 +1,7 @@
 import { Type } from "class-transformer"
 import { Length, IsIn } from "class-validator"
 import { BaseEntity } from "../BaseEntity"
+import { status } from "../../types"
 
 export class Admin extends BaseEntity {
 
@@ -19,7 +20,7 @@ export class Admin extends BaseEntity {
     @Type(() => String)
     role: string
 
-    @IsIn([0, 1, 2, 3])
+    @IsIn(status)
     @Type(() => Number)
     status: number = 0
 

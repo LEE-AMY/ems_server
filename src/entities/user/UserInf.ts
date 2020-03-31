@@ -1,17 +1,14 @@
 import { Type } from "class-transformer"
-import { Length, IsIn } from "class-validator"
+import { Length, IsIn, IsEmail, IsPhoneNumber } from "class-validator"
 import { BaseEntity } from "../BaseEntity"
+import { EGender } from "../../types"
 
 export class UserInf extends BaseEntity {
-
-    @Length(1, 10)
-    @Type(() => String)
-    infNo: string
 
     @Length(2, 60)
     name: string
 
-    @IsIn([1, 2])
+    @IsIn([EGender.male, EGender.female])
     @Type(() => Number)
     sex: number = 0
 
@@ -32,15 +29,10 @@ export class UserInf extends BaseEntity {
 
     phone: string
 
+    @IsEmail()
     email: string
 
-    @Length(1, 4)
-    @Type(() => String)
-    deptCode: string
-
-    @Length(5, 10)
-    @Type(() => String)
-    descCode: string
+    descID?: string
 
     public static transform(plainObj: object) {
         return super.baseTransform(this, plainObj)

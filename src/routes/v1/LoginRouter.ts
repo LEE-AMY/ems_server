@@ -1,47 +1,28 @@
 import Express from "express"
 import { ResponseHelp } from "../ResponseHelp"
-import { AdminService } from "../../services"
-import { EDBName } from "../../types"
+import { AdminService, LoginService } from "../../services"
+import { LoginCondition } from "../../entities"
 
 const router = Express.Router()
 
 
-router.post("", async (req, res) => {
+router.post("/:userType", async (req, res) => {
     try {
-        const result = await loginHelp(req.body)
-        if (result) {
+        const loginCondition: LoginCondition = {
+            userType: req.params.userType,
+            ...req.body
+        }
+        const result = await LoginService.login(loginCondition)
+        if (result === true) {
             ResponseHelp.sendData(result, req, res)
         } else (
-            ResponseHelp.sendError("账号或密码错误", req, res)
+            ResponseHelp.sendError(result, req, res)
         )
     } catch (error) {
         ResponseHelp.sendError("账号格式有误", req, res)
     }
 })
 
-async function loginHelp({ userType, userName, userPwd }) {
-    let result: any = ""
-    switch (userType) {
-        case EDBName.Admin:
-            result = await AdminService.loginValidate(userName, userPwd)
-            break;
-        case EDBName.Stu:
-            break;
-        case EDBName.Tch:
-            break;
-        default:
-            break;
-    }
-
-    if (result) {
-        return {
-            userName,
-            name: result.name
-        }
-    }
-
-    return result
-}
 
 
 export default router

@@ -6,8 +6,8 @@ export interface IStudent extends Student, mongoose.Document { }
 const StuSchema = new mongoose.Schema<IStudent>({
     stuNo: String,
     pwd: String,
-    infNo: String,
-    clsNo: String,
+    infID: String,
+    clsID: String,
     loginTime: Number,
     status: Number
 })

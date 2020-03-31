@@ -1,11 +1,3 @@
-// export function toHump(str: string) {
-//     return str.replace(/\_(\w)/g, (_, letter) => letter.toUpperCase());
-// }
-
-// export function toLine(str: string) {
-//     return str.replace(/([A-Z])/g, "_$1").toLowerCase()
-// }
-
 /**
  * 下划线转换驼峰
  * @param str 下划线字符串

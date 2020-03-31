@@ -1,39 +1,35 @@
 import { BaseEntity } from "../BaseEntity";
-import { Length, Min, Max, IsIn } from "class-validator";
+import { Length, Min, Max, IsIn, IsNotEmpty, IsInt } from "class-validator";
 import { Type } from "class-transformer";
+import { SRCStatus } from "../../types";
 
 export class CourseTab extends BaseEntity {
-    @Length(1, 10)
-    @Type(() => String)
-    crsNo: string
 
-    @Length(5, 10)
-    @Type(() => String)
-    tchNo: string
+    @IsNotEmpty({ message: "上课教师ID不能为空" })
+    tchID: string
 
-    @Length(5, 10)
-    @Type(() => String)
-    crsCode: string
+    @IsNotEmpty({ message: "课程ID不能为空" })
+    crsID: string
 
-    @Length(5, 10)
-    @Type(() => String)
-    termNo: string
+    @IsNotEmpty({ message: "学期ID不能为空" })
+    termID: string
 
-    @Length(1, 100)
-    @Type(() => String)
+    @IsNotEmpty({ message: "教室ID不能为空" })
     useRoom: string
 
-    @Min(0)
-    @Max(9999)
+    @IsInt({ message: "总可选人数必须是整数" })
+    @Min(1)
+    @Max(999999)
     @Type(() => Number)
     total: number
 
+    @IsInt({ message: "剩余可选人数必须是整数" })
     @Min(0)
     @Max(9999)
     @Type(() => Number)
     surplus: number
 
-    @IsIn([0, 1, 2, 3])
+    @IsIn(SRCStatus)
     @Type(() => Number)
     status: number = 0
 

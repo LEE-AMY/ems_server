@@ -1,6 +1,7 @@
 import { Type } from "class-transformer"
-import { Length, IsIn } from "class-validator"
+import { Length, IsIn, IsNotEmpty } from "class-validator"
 import { BaseEntity } from "../BaseEntity"
+import { status } from "../../types"
 
 export class Teacher extends BaseEntity {
 
@@ -12,15 +13,16 @@ export class Teacher extends BaseEntity {
     @Type(() => String)
     pwd: string
 
-    @Length(1, 10)
-    @Type(() => String)
-    infNo: string
+    @IsNotEmpty({ message: "所属学院不能为空" })
+    deptID: string
 
     loginTime: number = new Date().getTime()
 
-    @IsIn([0, 1, 2, 3])
+    @IsIn(status)
     @Type(() => Number)
     status: number = 0
+
+    infID?: string
 
     public static transform(plainObj: object) {
         return super.baseTransform(this, plainObj)

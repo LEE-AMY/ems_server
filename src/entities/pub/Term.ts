@@ -1,12 +1,9 @@
 import { BaseEntity } from "../BaseEntity";
 import { Length, Min, Max, IsIn } from "class-validator";
 import { Type } from "class-transformer";
+import { status } from "../../types";
 
 export class Term extends BaseEntity {
-
-    @Length(1, 10)
-    @Type(() => String)
-    termNo: string
 
     @Length(1, 20)
     termName: string
@@ -17,7 +14,7 @@ export class Term extends BaseEntity {
     @Type(() => Number)
     toDate: number = new Date().getTime()
 
-    @IsIn([0, 1, 2, 3])
+    @IsIn(status)
     @Type(() => Number)
     status: number = 0
 

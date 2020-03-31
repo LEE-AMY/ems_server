@@ -1,26 +1,26 @@
 import { BaseEntity } from "../BaseEntity";
-import { Length, IsIn } from "class-validator";
+import { Length, IsIn, IsNotEmpty } from "class-validator";
 import { Type } from "class-transformer";
+import { status } from "../../types";
 
-export class Profession  extends BaseEntity {
-
-    @Length(5, 10)
-    @Type(() => String)
-    proCode: string
+/**
+ * 专业类
+ */
+export class Profession extends BaseEntity {
 
     @Length(2, 100)
     @Type(() => String)
     proName: string
 
-    @Length(1, 4)
+    @IsNotEmpty({ message: "专业所属学院ID不能为空" })
     @Type(() => String)
-    deptCode: string
+    deptID: string
 
-    @Length(5, 10)
+    @IsNotEmpty({ message: "专业描述ID不能为空" })
     @Type(() => String)
-    descCode: string
+    descID: string
 
-    @IsIn([0, 1, 2, 3])
+    @IsIn(status)
     @Type(() => Number)
     status: number = 0
 

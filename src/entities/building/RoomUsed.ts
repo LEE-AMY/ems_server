@@ -1,19 +1,16 @@
 import { BaseEntity } from "../BaseEntity";
-import { Length, Min, Max, IsIn } from "class-validator";
+import { Length, Min, Max, IsIn, IsNotEmpty } from "class-validator";
 import { Type } from "class-transformer";
+import { status } from "../../types";
 
 export class RoomUsed extends BaseEntity {
-
-    @Length(1, 10)
-    @Type(() => String)
-    useNo: string
 
     @Length(2, 50)
     @Type(() => String)
     useType: string
 
     @Type(() => String)
-    useCrs: string
+    useCrsID: string
 
     @IsIn([-1, 1, 2, 3, 4, 5, 6, 7])
     @Type(() => Number)
@@ -24,17 +21,17 @@ export class RoomUsed extends BaseEntity {
     toDate: number | string
 
     @Type(() => String)
-    timeNo: string
+    timeID: string
 
-    @Length(1, 10)
+    @IsNotEmpty({ message: "所属学期编号ID不能为空" })
     @Type(() => String)
-    termNo: string
+    termID: string
 
-    @Length(3, 10)
+    @IsNotEmpty({ message: "使用教室ID不能为空" })
     @Type(() => String)
-    roomNo: string
+    roomID: string
 
-    @IsIn([0, 1, 2, 3])
+    @IsIn(status)
     @Type(() => Number)
     status: number = 0
 

@@ -4,8 +4,6 @@ import { UserInf } from "../entities"
 export interface IUserBase extends UserInf, mongoose.Document { }
 
 const UserInfSchema = new mongoose.Schema<IUserBase>({
-
-    infNo: String,
     name: String,
     sex: Number,
     birth: String,

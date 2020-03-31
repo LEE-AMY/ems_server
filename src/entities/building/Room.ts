@@ -1,6 +1,7 @@
 import { BaseEntity } from "../BaseEntity";
-import { Length, Min, Max, IsIn } from "class-validator";
+import { Length, Min, Max, IsIn, IsInt, IsNotEmpty } from "class-validator";
 import { Type } from "class-transformer";
+import { status } from "../../types";
 
 export class Room extends BaseEntity {
 
@@ -12,21 +13,21 @@ export class Room extends BaseEntity {
     @Type(() => String)
     roomType: string
 
+    @IsInt({ message: "教室所属楼层必须为整数" })
     @Min(-100)
-    @Max(500)
     @Type(() => Number)
     roomFloor: number
 
+    @IsInt({ message: "容纳人数必须为整数" })
     @Min(1)
-    @Max(99999)
     @Type(() => Number)
     capacity: number
 
-    @Length(5, 10)
+    @IsNotEmpty({ message: "教室所属建筑ID不能为空" })
     @Type(() => String)
-    buildNo: string
+    buildID: string
 
-    @IsIn([0, 1, 2, 3])
+    @IsIn(status)
     @Type(() => Number)
     status: number = 0
 

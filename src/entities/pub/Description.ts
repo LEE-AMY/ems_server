@@ -4,24 +4,20 @@ import { Type } from "class-transformer";
 
 export class Description extends BaseEntity {
 
-    @Length(5, 10)
-    @Type(() => String)
-    descCode: string
-
     @Length(0, 100)
     @Type(() => String)
-    descTitle: string
+    descTitle?: string
 
     @Length(0, 200)
     @Type(() => String)
-    descSummary: string
+    descSummary?: string
 
     @Type(() => String)
-    descDetail: string
+    descDetail?: string
 
     @Length(0, 60)
     @Type(() => String)
-    author: string
+    author?: string
 
     public static transform(plainObj: object) {
         return super.baseTransform(this, plainObj)
