@@ -27,6 +27,8 @@ export class Student extends BaseEntity {
 
     infID?: string
 
+    _index: number = 0
+
     public static transform(plainObj: object) {
         return super.baseTransform(this, plainObj)
     }

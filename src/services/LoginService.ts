@@ -18,6 +18,8 @@ export class LoginService {
             case EDBName.Admin:
                 result = await AdminService.loginValidate(loginCondition.userName, loginCondition.userPwd)
                 break;
+            default:
+                return ["用户角色类型错误"]
         }
 
         if (result) {

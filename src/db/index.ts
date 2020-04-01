@@ -1,13 +1,15 @@
 import mongoose from 'mongoose'
 import AdminModel from "./AdminSchema"
-import StudentSchema from "./StudentSchema"
-import UserBaseSchema from "./UserBaseSchema"
+import StudentModel from "./StudentSchema"
+import UserBaseModel from "./UserBaseSchema"
+import TeacherModel from "./TeacherSchema"
 
 const dbURL = "mongodb://127.0.0.1:27017/ems";
 
 mongoose.connect(dbURL, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    // autoIndex: false
 }).then(() => {
     console.log("connect mongodb success");
 }).catch((e) => {
@@ -16,6 +18,7 @@ mongoose.connect(dbURL, {
 
 export {
     AdminModel,
-    StudentSchema,
-    UserBaseSchema
+    StudentModel,
+    UserBaseModel,
+    TeacherModel
 }

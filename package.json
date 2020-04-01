@@ -4,9 +4,9 @@
   "description": "Educational Management System",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rd /s /q dist & tsc",
-    "dev": "nodemon --watch src -e ts --exec ts-node src/index.ts"
+    "dev": "nodemon --watch src -e ts --exec ts-node src/index.ts",
+    "test": "nodemon --watch src -e ts --exec ts-node src/test/index.ts"
   },
   "repository": {
     "type": "git",
