@@ -7,7 +7,7 @@ export class Teacher extends BaseEntity {
 
     @Length(5, 10)
     @Type(() => String)
-    tchNo: string
+    tchNo: string = "00000000"
 
     @Length(6, 50)
     @Type(() => String)
@@ -23,6 +23,8 @@ export class Teacher extends BaseEntity {
     status: number = 0
 
     infID?: string
+
+    _index: number
 
     public static transform(plainObj: object) {
         return super.baseTransform(this, plainObj)

@@ -60,3 +60,5 @@ export const role = [
     { enName: EDBName.Tch, cnName: "教师" },
     { enName: EDBName.Admin, cnName: "管理员" }
 ]
+
+export const pwdType = "******"

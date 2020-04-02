@@ -1,6 +1,7 @@
 import { AdminModel } from "../db"
 import { Admin } from "../entities/user/Admin"
 import { IAdmin } from "../db/AdminSchema";
+import { pwdType } from "../types";
 
 export class AdminService {
 
@@ -43,6 +44,7 @@ export class AdminService {
 
     public static async loginValidate(adminNo: string, pwd: string) {
         const result = await AdminModel.findOne({ adminNo, pwd })
+        if (result) result.pwd = pwdType
         return result
     }
 }

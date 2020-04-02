@@ -7,7 +7,7 @@ export class Student extends BaseEntity {
 
     @Length(5, 10)
     @Type(() => String)
-    stuNo: string
+    stuNo: string = "00000000"
 
     @Length(6, 50)
     @Type(() => String)
