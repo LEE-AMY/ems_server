@@ -1,9 +1,12 @@
 import { AdminModel } from "../db"
 import { Admin } from "../entities/user/Admin"
 import { IAdmin } from "../db/AdminSchema";
-import { pwdType } from "../types";
+import { pwdType, EDBName } from "../types";
+import { getHash } from "../utils";
 
 export class AdminService {
+
+    private static saltRounds = 10
 
     public static async add(admin: Admin): Promise<IAdmin | string[]> {
         admin = Admin.transform(admin);
@@ -13,10 +16,12 @@ export class AdminService {
             return errs
         }
 
-        const acc = await this.findByAccount(admin.adminNo)
-        if (acc.length > 0) {
-            return [`账号${admin.adminNo}已存在`]
-        }
+        // const acc = await this.findByAccount(admin.adminNo)
+        // if (acc.length > 0) {
+        //     return [`账号${admin.adminNo}已存在`]
+        // }
+
+        admin.pwd = await getHash(admin.pwd, this.saltRounds)
 
         return await AdminModel.create(admin)
     }
@@ -27,7 +32,7 @@ export class AdminService {
     }
 
     public static async findByAccount(adminNo: string) {
-        return await AdminModel.find({ adminNo })
+        return await AdminModel.findOne({ adminNo })
     }
 
     public static async edit(adminNo: string, admin: Admin) {

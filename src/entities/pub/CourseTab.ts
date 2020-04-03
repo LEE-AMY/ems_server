@@ -1,7 +1,7 @@
 import { BaseEntity } from "../BaseEntity";
 import { Length, Min, Max, IsIn, IsNotEmpty, IsInt } from "class-validator";
 import { Type } from "class-transformer";
-import { SRCStatus } from "../../types";
+import { crsStatus } from "../../types";
 
 export class CourseTab extends BaseEntity {
 
@@ -29,7 +29,7 @@ export class CourseTab extends BaseEntity {
     @Type(() => Number)
     surplus: number
 
-    @IsIn(SRCStatus)
+    @IsIn(crsStatus)
     @Type(() => Number)
     status: number = 0
 

@@ -3,15 +3,17 @@ import { Student } from "../entities"
 
 export interface IStudent extends Student, mongoose.Document { }
 
-const StuSchema = new mongoose.Schema<IStudent>({
-    stuNo: String,
-    pwd: String,
-    clsID: String,
-    deptID: String,
-    loginTime: Number,
-    status: Number,
-    infID: String,
-    _index: Number
+const Schema = mongoose.Schema;
+
+const StuSchema = new Schema<IStudent>({
+    stuNo: { type: String, required: true, index: { unique: true } },
+    pwd: { type: String, required: true },
+    clsID: { type: Schema.Types.ObjectId, required: true },
+    deptID: { type: Schema.Types.ObjectId, required: true },
+    loginTime: { type: Number, required: true },
+    status: { type: Number, required: true },
+    infID: { type: Schema.Types.ObjectId, required: true },
+    _index: { type: Number, required: true }
 }, {
     versionKey: false
 })

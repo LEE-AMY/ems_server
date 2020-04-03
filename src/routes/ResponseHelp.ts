@@ -1,7 +1,7 @@
 import { Response, Request } from "express";
-import { corsParams } from "../types";
+import { TCorsParams } from "../types";
 
-const defCors: corsParams = {
+const defCors: TCorsParams = {
     origin: "*",
     headers: "Content-Type, Content-Length, Authorization, Accept, X-Requested-With",
     methods: "PUT, POST, GET, DELETE, OPTIONS"

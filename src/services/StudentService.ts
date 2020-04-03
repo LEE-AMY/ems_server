@@ -3,6 +3,7 @@ import { StudentModel } from "../db";
 import { IStudent } from "../db/StudentSchema";
 import { pwdType } from "../types";
 
+
 export class StudentService {
 
     @getStuIndex
@@ -10,6 +11,9 @@ export class StudentService {
     private static year: number = 0
     private static len: number = 5
 
+    /**
+     * 生成学号
+     */
     private static get stuNo(): string {
         const ny = new Date().getFullYear()
         if (ny !== this.year) {
@@ -57,10 +61,6 @@ export class StudentService {
         }
 
         return result
-    }
-
-    public static async deleteByStuNo(stuNo: string) {
-        await StudentModel.deleteOne({ stuNo })
     }
 
     public static async deleteById(_id: string) {

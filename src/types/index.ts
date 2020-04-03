@@ -1,64 +1,61 @@
-
-/**
- * 普通状态枚举
- */
-export enum EStatus {
-    unActive = 0,
-    active,
-    logout,
-    locked
-}
+import { EStatus, EDBName, ECRSStatus, EGender } from "./Enum";
 
 /**
  * 普通状态数组
  */
-export const status: EStatus[] = [EStatus.unActive, EStatus.active, EStatus.logout, EStatus.logout]
+const status: EStatus[] = [EStatus.unActive, EStatus.active, EStatus.logout, EStatus.locked]
 
 /**
- * 课程可选状态
+ * 普通状态对应中文
  */
-export enum ECRSStatus {
-    unActive = 0,
-    optional,
-    unOptional,
-    full
-}
-
-export const SRCStatus: ECRSStatus[] = [ECRSStatus.unActive, ECRSStatus.optional, ECRSStatus.unOptional, ECRSStatus.full]
+const statusCN = [{
+    status: EStatus.unActive,
+    CN: "未激活"
+}, {
+    status: EStatus.active,
+    CN: "激活"
+}, {
+    status: EStatus.logout,
+    CN: "注销"
+}, {
+    status: EStatus.locked,
+    CN: "锁定"
+}]
 
 /**
- * 性别枚举
+ * 课程状态数组
  */
-export enum EGender {
-    male,
-    female
-}
+const crsStatus: ECRSStatus[] = [ECRSStatus.unActive, ECRSStatus.optional, ECRSStatus.unOptional, ECRSStatus.full]
 
 /**
  * CORS 参数类型约束
  */
-export type corsParams = {
+type TCorsParams = {
     origin?: string,
     headers?: string,
     methods?: string
 }
 
 /**
- * 数据库名字枚举
- */
-export enum EDBName {
-    Admin = "admin",
-    Stu = "student",
-    Tch = "teacher"
-}
-
-/**
  * 用户角色类型
  */
-export const role = [
+const role = [
     { enName: EDBName.Stu, cnName: "学生" },
     { enName: EDBName.Tch, cnName: "教师" },
     { enName: EDBName.Admin, cnName: "管理员" }
 ]
 
-export const pwdType = "******"
+const pwdType = "******"
+
+export {
+    EStatus,
+    ECRSStatus,
+    EGender,
+    EDBName,
+    TCorsParams,
+    status,
+    statusCN,
+    crsStatus,
+    role,
+    pwdType
+}
