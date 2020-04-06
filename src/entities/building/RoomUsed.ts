@@ -10,14 +10,16 @@ export class RoomUsed extends BaseEntity {
     useType: string
 
     @Type(() => String)
-    useCrsID: string
+    useCrsID: string = ""
 
     @IsIn([-1, 1, 2, 3, 4, 5, 6, 7])
     @Type(() => Number)
     useWeek: number = -1
 
+    @Type(() => String)
     fromDate: number | string
 
+    @Type(() => String)
     toDate: number | string
 
     @Type(() => String)

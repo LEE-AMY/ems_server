@@ -1,17 +1,21 @@
 import Express from "express"
-
-import AdminRouter from "./AdminRouter"
-import LoginRouter from "./LoginRouter"
+import UserRouter from "./userRouter"
+import DeptRouter from "./deptRouter"
+import BuildRouter from "./buildingRouter"
+import PubRouter from "./pubRouter"
 import { ResponseHelp } from "../ResponseHelp"
-import { role } from "../../types"
+import { roleCN } from "../../types"
 
 const router = Express.Router()
 
-router.use("/admin", AdminRouter)
-router.use("/login", LoginRouter)
+router.use("/user", UserRouter)
+router.use("/dept", DeptRouter)
+router.use("/building", BuildRouter)
+router.use("/pub", PubRouter)
+
 
 router.get("/role", (req, res) => {
-    ResponseHelp.sendData(role, req, res)
+    ResponseHelp.sendData(roleCN, req, res)
 })
 
 

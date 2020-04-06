@@ -12,7 +12,7 @@ app.use(cookieParser())
 app.use(Express.json())
 
 app.get("/", (req, res) => {
-    res.send("hello word")
+    res.send("I already remember you")
 })
 
 app.use("/api", apiRout)

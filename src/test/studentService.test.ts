@@ -1,30 +1,33 @@
 import { StudentService } from "../services"
 
-export async function add() {
+export async function addStu() {
     const stu: any = {
         stuNo: "20200001",
-        pwd: "123123",
-        clsID: "123",
-        deptID: "123",
+        pwd: "abcabc",
+        clsID: "5e8877fd3826330ee45d7b1a",
+        deptID: "5e8877fd3826330ee45d7b1a",
         loginTime: Date.now(),
         status: 1,
         infID: ""
     }
     const result = await StudentService.add(stu)
 
-    console.log("result=>", result)
+    console.log("addStu=>", result)
     return result
 }
 
 export async function edit() {
     const stu: any = {
-        stuNo: "202099999",
-        infID: "",
-        pwd: "abcabcf",
-        _index: 123
+        stuNo: "20200001",
+        pwd: "cdcdcdcd",
+        clsID: "34567890",
+        deptID: "2345678",
+        loginTime: Date.now(),
+        status: 1,
+        infID: "12345"
     }
 
-    const result = await StudentService.edit("5e85a2867ef4e6479c78c33b", stu)
+    const result = await StudentService.edit("202000001", stu)
     console.log("edit", result)
     return result
 }

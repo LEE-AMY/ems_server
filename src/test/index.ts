@@ -1,15 +1,22 @@
 import "reflect-metadata"
-// import { add, edit } from "./studentService.test"
+import "../db"
+import { addAdmin, updateAdmin, findAdmin, deleteAmin } from "./adminServices.test"
+import { addStu } from "./studentService.test"
+import { addTch } from "./teacherServices.test"
 import { login } from "./loginService.test"
-import { add } from "./adminServices.test"
+import { ClassService } from "../services"
 
-// setTimeout(() => {
-//     add()
-// }, 5000);
+setTimeout(() => {
+    console.log("===")
+    // addAdmin()
+    addStu()
+    // addTch()
+}, 10000);
 
-// edit()
+// updateAdmin()
 
-// add()
+// findAdmin("admin1")
 
-login()
+// deleteAmin("admin4")
 
+// login()

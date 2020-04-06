@@ -1,5 +1,5 @@
 import { BaseEntity } from "../BaseEntity";
-import { Length, Min, Max, IsIn, IsInt } from "class-validator";
+import { Length, Min, Max, IsIn, IsInt, IsNotEmpty } from "class-validator";
 import { Type } from "class-transformer";
 import { status } from "../../types";
 
@@ -35,8 +35,9 @@ export class Building extends BaseEntity {
     @Type(() => Number)
     status: number = 0
 
+    @IsNotEmpty({ message: "建筑物描述id不能为空" })
     @Type(() => String)
-    descID?: string
+    descID: string
 
     public static transform(plainObj: object) {
         return super.baseTransform(this, plainObj)

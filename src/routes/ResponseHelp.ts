@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import { TCorsParams } from "../types";
+import { TCorsParams, ISearchResult } from "../types";
 
 const defCors: TCorsParams = {
     origin: "*",
@@ -31,10 +31,23 @@ export class ResponseHelp {
 
     public static sendData(data: any, req: Request, res: Response) {
         this.pubResHead(req, res)
-
         res.send({
             err: null,
             data
+        })
+    }
+
+    public static sendPageData<T>(data: ISearchResult<T>, req: Request, res: Response) {
+        if (data.errors.length) {
+            this.sendError(data.errors, req, res)
+            return
+        }
+
+        this.pubResHead(req, res)
+        res.send({
+            err: null,
+            data: data.data,
+            total: data.count
         })
     }
 }

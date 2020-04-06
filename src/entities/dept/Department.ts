@@ -1,6 +1,8 @@
 import { BaseEntity } from "../BaseEntity";
 import { Length, IsEmail, IsNotEmpty } from "class-validator";
 import { Type } from "class-transformer";
+import { IDescription } from "../../db";
+import { Description } from "..";
 
 export class Department extends BaseEntity {
 
@@ -19,7 +21,6 @@ export class Department extends BaseEntity {
     @IsEmail()
     email: string
 
-    @IsNotEmpty({ message: "学院描述ID不能为空" })
     @Type(() => String)
     descID: string
 

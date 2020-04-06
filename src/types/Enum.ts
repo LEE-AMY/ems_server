@@ -11,7 +11,7 @@ export enum EStatus {
 /**
  * 课程可选状态
  */
-export enum ECRSStatus {
+export enum ECrsStatus {
     unActive = 0,
     optional,
     unOptional,

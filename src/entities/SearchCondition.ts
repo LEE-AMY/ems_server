@@ -17,6 +17,9 @@ export class SearchCondition extends BaseEntity {
     @Type(() => String)
     key: string = ""
 
+    @Type(() => String)
+    keyType: string = ""
+
     public static transform(plainObj: object) {
         return super.baseTransform(this, plainObj)
     }
