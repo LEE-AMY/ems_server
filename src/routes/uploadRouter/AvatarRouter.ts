@@ -2,17 +2,16 @@ import express from "express"
 import multer from "multer"
 import Path from "path"
 import { ResponseHelp } from "../ResponseHelp"
-import { ImgTabService } from "../../services/pubServe/ImgTabService";
-import { ImgTab } from "../../entities";
-
-const diskPath = "/upload/avatar";
+import { EImgType } from "../../types"
+import { ImgSetService } from "../../services/pubServe/ImgSetService"
+import { cloneObj, deleteFile } from "../../utils"
 
 const router = express.Router()
-
+const diskPath = "/upload/avatar"
+const destination = Path.resolve(__dirname, `../../../public${diskPath}`)
 const allowedExtensions = [".jpg", ".png", ".gif", ".bmp", ".jiff"];
-
 const storage = multer.diskStorage({
-    destination: Path.resolve(__dirname, `../../../public${diskPath}`),
+    destination,
     filename(req, file, cb) {
         const time = Date.now()
         const extname = Path.extname(file.originalname)
@@ -36,24 +35,34 @@ const upload = multer({
 }).single("avatar")
 
 router.post("/:id", (req, res) => {
-
-    // ImgTabService.add()
-    upload(req, res, err => {
+    upload(req, res, async err => {
         if (err) {
-            res.send(err)
-        } else {
-            const url = `${diskPath}/${req.file.filename}`;
-            res.send(url)
+            ResponseHelp.sendError(err, req, res)
+            return
+        }
+        const url = `${diskPath}/${req.file.filename}`
+        const imgSet: any = {
+            useID: req.params.id,
+            type: EImgType.avatar,
+            url,
+            setName: "avatar"
+        }
 
-            const obj: any = {
-                useID: req.params.id,
-                avatar: [{
-                    path: "12345",
-                    status: 1
-                }],
-                img: [],
-                status: 1
+        try {
+            const result = await ImgSetService.add(imgSet)
+
+            if (Array.isArray(result)) {
+                deleteFile(`${destination}/${req.file.filename}`)
+                ResponseHelp.sendError(result, req, res)
+                return
             }
+
+            const obj = cloneObj(result)
+            obj.url = url
+            ResponseHelp.sendData(obj, req, res)
+        } catch (error) {
+            deleteFile(`${destination}/${req.file.filename}`)
+            ResponseHelp.sendError(`id[${req.params.id}]错误`, req, res)
         }
     })
 })

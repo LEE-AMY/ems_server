@@ -1,3 +1,5 @@
+import { EStatus } from "."
+
 /**
  * CORS 参数类型约束
  */
@@ -11,6 +13,7 @@ export type TCorsParams = {
  * 图片数组存放格式
  */
 export type TImgObj = {
-    path: string,
-    status: number
+    url: string,
+    status: EStatus
+    date: number
 }

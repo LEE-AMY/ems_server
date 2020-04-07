@@ -34,3 +34,10 @@ export enum EDBName {
     Stu = "student",
     Tch = "teacher"
 }
+
+
+export enum EImgType {
+    avatar = "头像",
+    life = "生活",
+    travel = "旅游"
+}

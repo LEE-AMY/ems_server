@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt"
-import { LoginCondition } from "../entities"
+import fs from "fs"
 
 /**
  * 下划线转换驼峰
@@ -37,4 +37,18 @@ export async function hashCompare(pwd: string, hash: string): Promise<boolean> {
  */
 export function cloneObj(obj: any): any {
     return JSON.parse(JSON.stringify(obj))
+}
+
+/**
+ * 删除文件
+ * @param path 文件全路径
+ */
+export function deleteFile(path) {
+    fs.unlink(path, err => {
+        if (err) {
+            console.log(`删除${path}失败`)
+            return
+        }
+        console.log(`删除${path}成功`)
+    })
 }

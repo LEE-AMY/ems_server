@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import { BuildingModel, RoomModel, RoomUsedModel, IBuilding, IRoom, IRoomUsed } from './buildModel'
 import { DepartmentModel, ClassModel, ProfessionModel, CourseModel, IDepartment, IClass, IProfession, ICourse } from './deptModel';
-import { CourseTabModel, DescriptionModel, OptCourseModel, TermModel, TimeModel, ICourseTab, IDescription, IOptCourse, ITerm, ITime, ImgTabModel, IImgTab } from './pubModel';
+import { CourseTabModel, DescriptionModel, OptCourseModel, TermModel, TimeModel, ICourseTab, IDescription, IOptCourse, ITerm, ITime, ImgSetModel, IImgSet } from './pubModel';
 import { AdminModel, StudentModel, UserBaseModel, TeacherModel, IAdmin, IStudent, IUserBase, ITeacher } from './userModel';
 
 const dbURL = "mongodb://127.0.0.1:27017/ems";
@@ -34,7 +34,7 @@ export {
     StudentModel,
     UserBaseModel,
     TeacherModel,
-    ImgTabModel,
+    ImgSetModel,
     IAdmin,
     IStudent,
     IUserBase,
@@ -51,5 +51,5 @@ export {
     IBuilding,
     IRoom,
     IRoomUsed,
-    IImgTab
+    IImgSet
 }

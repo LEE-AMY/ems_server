@@ -1,4 +1,4 @@
-import { EStatus, EDBName, ECrsStatus, EGender } from "./Enum";
+import { EStatus, EDBName, ECrsStatus, EGender, EImgType } from "./Enum";
 import { TCorsParams, TImgObj } from "./Types";
 import { ISearchResult } from "./Interface"
 
@@ -51,11 +51,17 @@ export const roleArr = roleCN.map(item => item.enName)
  */
 export const pwdType = "******"
 
+/**
+ * img类型数组
+ */
+export const imgTypeArr: EImgType[] = [EImgType.avatar, EImgType.life, EImgType.travel]
+
 export {
     EStatus,
     ECrsStatus,
     EGender,
     EDBName,
+    EImgType,
     TCorsParams,
     TImgObj,
     ISearchResult
