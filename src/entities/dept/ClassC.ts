@@ -17,11 +17,7 @@ export class ClassC extends BaseEntity {
     @IsNotEmpty({ message: "专业ID不能为空" })
     proID: string
 
-    @IsNotEmpty({ message: "教师ID不能为空" })
-    @Type((v) => {
-        console.log("===>", v)
-        return String
-    })
+    // @IsNotEmpty({ message: "教师ID不能为空" })
     tchNo: string
 
     @IsIn(status)

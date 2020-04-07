@@ -32,7 +32,7 @@ export class UserInf extends BaseEntity {
     @IsEmail()
     email: string
 
-    descID?: string
+    descID: string
 
     public static transform(plainObj: object) {
         return super.baseTransform(this, plainObj)

@@ -9,7 +9,7 @@ const TchSchema = new mongoose.Schema<ITeacher>({
     deptID: { type: mongoose.Types.ObjectId },
     loginTime: Number,
     status: Number,
-    infID: { type: mongoose.Types.ObjectId },
+    infID: String,
     _index: Number
 }, {
     versionKey: false

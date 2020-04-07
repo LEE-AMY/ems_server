@@ -13,7 +13,11 @@ export class AdminService {
         }
 
         admin.pwd = await getHash(admin.pwd)
-        return await AdminModel.create(admin)
+        const result = await AdminModel.create(admin)
+        if (result) {
+            result.pwd = pwdType
+        }
+        return result
     }
 
     public static async delete(adminNo: string) {
@@ -36,8 +40,17 @@ export class AdminService {
     }
 
     public static async findByAccount(adminNo: string) {
+        const result = await AdminModel.findOne({ adminNo })
+        if (result) {
+            result.pwd = pwdType
+        }
+        return result
+    }
+
+    public static async loginFind(adminNo: string) {
         return await AdminModel.findOne({ adminNo })
     }
+
 
     /**
      * 模糊查找

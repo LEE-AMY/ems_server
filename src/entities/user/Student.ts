@@ -5,7 +5,6 @@ import { status } from "../../types"
 
 export class Student extends BaseEntity {
 
-    @Length(5, 10)
     @Type(() => String)
     stuNo: string = "00000000"
 

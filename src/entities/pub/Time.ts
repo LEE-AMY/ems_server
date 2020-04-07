@@ -11,11 +11,11 @@ export class Time extends BaseEntity {
     @Type(() => String)
     timeName: string
 
-    @Length(8, 20)
+    @Length(1, 20)
     @Type(() => String)
     timeStart: string
 
-    @Length(8, 20)
+    @Length(1, 20)
     @Type(() => String)
     timeEnd: string
 

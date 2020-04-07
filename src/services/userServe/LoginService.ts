@@ -18,24 +18,31 @@ export class LoginService {
         let result: IAdmin | IStudent | ITeacher | null
         switch (userType) {
             case EDBName.Admin:
-                result = await AdminService.findByAccount(userName)
+                result = await AdminService.loginFind(userName)
                 break;
             case EDBName.Stu:
-                result = await StudentService.findByAccount(userName)
+                result = await StudentService.loginFind(userName)
                 break;
             case EDBName.Tch:
-                result = await TeacherService.findByAccount(userName)
+                result = await TeacherService.loginFind(userName)
                 break;
             default:
                 return ["用户角色类型错误"]
         }
 
         if (result) {
+
+            if(!await hashCompare(userPwd, result.pwd)) {
+                return ["账号或密码错误 "]
+            }
+
+            result.pwd = pwdType
+
             switch (result.status) {
                 case EStatus.unActive:
                     return ["账号未激活"]
                 case EStatus.active:
-                    break
+                    return result
                 case EStatus.logout:
                     return ["账号已被注销"]
                 case EStatus.locked:
@@ -47,11 +54,5 @@ export class LoginService {
             return ["账号或密码错误"]
         }
 
-        if (await hashCompare(userPwd, result.pwd)) {
-            result.pwd = pwdType
-            return result
-        } else {
-            return ["账号或密码错误"]
-        }
     }
 }

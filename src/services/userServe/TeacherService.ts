@@ -1,6 +1,6 @@
-import { Teacher } from "../../entities"
-import { TeacherModel } from "../../db"
-import { pwdType } from "../../types"
+import { Teacher, SearchCondition } from "../../entities"
+import { TeacherModel, ITeacher } from "../../db"
+import { pwdType, ISearchResult } from "../../types"
 import { getHash } from "../../utils"
 
 export class TeacherService {
@@ -42,17 +42,57 @@ export class TeacherService {
         const errs = await newTch.validateThis(true);
         if (errs.length) { return errs }
 
-        const { _index, tchNo: _, ...updateTch } = tch
+        if (tch.pwd) {
+            tch.pwd = await getHash(tch.pwd)
+        }
 
-        return TeacherModel.findOneAndUpdate({ tchNo }, updateTch);
+        const result = await TeacherModel.findOneAndUpdate({ tchNo }, tch);
+        if (result) {
+            result.pwd = pwdType
+        }
+
+        return result
     }
 
-    public static async findByIdAndDelete(tchNo: string) {
-        return await TeacherModel.findByIdAndDelete({ tchNo })
+    public static async findOneAndDelete(tchNo: string) {
+        return await TeacherModel.findOneAndDelete({ tchNo })
     }
 
     public static async findByAccount(tchNo: string) {
+        const result = await TeacherModel.findOne({ tchNo })
+        if (result) {
+            result.pwd = pwdType
+        }
+        return result
+    }
+
+    public static async loginFind(tchNo: string) {
         return await TeacherModel.findOne({ tchNo })
+    }
+
+    public static async find(condition: SearchCondition): Promise<ISearchResult<ITeacher>> {
+        condition = SearchCondition.transform(condition)
+        const errors = await condition.validateThis(true)
+        if (errors.length) {
+            return { errors, count: 0, data: [] }
+        }
+
+        const { key, page, limit, keyType } = condition
+        const teachers = await TeacherModel.find({ tchNo: { $regex: new RegExp(key) } })
+            .skip((page - 1) * limit)
+            .limit(limit)
+
+        const count = await TeacherModel.find({ tchNo: { $regex: new RegExp(key) } })
+            .countDocuments()
+
+        // 屏蔽密码
+        teachers.forEach(item => item.pwd = pwdType)
+
+        return {
+            errors: [],
+            count,
+            data: teachers
+        }
     }
 }
 

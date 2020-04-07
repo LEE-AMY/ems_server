@@ -1,6 +1,8 @@
 # ems_server
 
 > Educational Management System
+> 部分表有改动未更新
+> 接口文档未更新
 
 [toc]
 

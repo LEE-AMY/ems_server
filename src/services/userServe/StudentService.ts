@@ -54,13 +54,15 @@ export class StudentService {
             return errs
         }
 
-        const { stuNo: _, _index, ...updateStu } = stu
-
-        if (updateStu.pwd) {
-            updateStu.pwd = await getHash(updateStu.pwd)
+        if (stu.pwd) {
+            stu.pwd = await getHash(stu.pwd)
         }
 
-        return await StudentModel.findOneAndUpdate({ stuNo }, updateStu)
+        const result = await StudentModel.findOneAndUpdate({ stuNo }, stu)
+        if (result) {
+            result.pwd = pwdType
+        }
+        return result
     }
 
     public static async findOneAndDelete(stuNo: string) {
@@ -68,6 +70,14 @@ export class StudentService {
     }
 
     public static async findByAccount(stuNo: string) {
+        const result = await StudentModel.findOne({ stuNo })
+        if (result) {
+            result.pwd = pwdType
+        }
+        return result
+    }
+
+    public static async loginFind(stuNo: string) {
         return await StudentModel.findOne({ stuNo })
     }
 
