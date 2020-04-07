@@ -1,6 +1,6 @@
 import { Building, Room, RoomUsed } from "./building"
 import { ClassC, Course, Department, Profession } from "./dept"
-import { CourseTab, Description, OptCourse, Term, Time } from "./pub"
+import { CourseTab, Description, OptCourse, Term, Time, ImgTab, ImgPath } from "./pub"
 import { Admin, Student, Teacher, UserInf } from "./user"
 import { LoginCondition } from "./LoginCondition"
 import { SearchCondition } from "./SearchCondition"
@@ -24,5 +24,7 @@ export {
     Teacher,
     UserInf,
     LoginCondition,
-    SearchCondition
+    SearchCondition,
+    ImgTab,
+    ImgPath
 }

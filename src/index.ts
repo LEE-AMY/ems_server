@@ -6,6 +6,7 @@ import apiRout from "./routes"
 
 const port = 9527;
 const app = Express();
+app.use("/upload", Express.static("public/upload"))
 
 app.use(cookieParser())
 

@@ -1,5 +1,5 @@
 import { EStatus, EDBName, ECrsStatus, EGender } from "./Enum";
-import { TCorsParams } from "./Types";
+import { TCorsParams, TImgObj } from "./Types";
 import { ISearchResult } from "./Interface"
 
 /**
@@ -57,5 +57,6 @@ export {
     EGender,
     EDBName,
     TCorsParams,
+    TImgObj,
     ISearchResult
 }

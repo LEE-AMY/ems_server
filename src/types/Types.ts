@@ -6,3 +6,11 @@ export type TCorsParams = {
     headers?: string,
     methods?: string
 }
+
+/**
+ * 图片数组存放格式
+ */
+export type TImgObj = {
+    path: string,
+    status: number
+}
