@@ -11,24 +11,24 @@ router.post("", async (req, res) => {
     try {
         const { desc, ...pro } = req.body
         if (!isValidObjectId(pro.deptID)) {
-            ResponseHelp.sendError("部门id类型不符合要求", req, res)
+            ResponseHelp.sendError("部门id类型不符合要求", res)
             return
         }
         const descResult = await DescriptionService.add(desc)
         if (Array.isArray(descResult)) {
-            ResponseHelp.sendError(descResult, req, res)
+            ResponseHelp.sendError(descResult, res)
             return
         }
 
         const proResult = await ProfessionService.add({ ...pro, descID: descResult._id })
         if (Array.isArray(proResult)) {
             await DescriptionService.delete(descResult._id)
-            ResponseHelp.sendError(proResult, req, res)
+            ResponseHelp.sendError(proResult, res)
             return
         }
-        ResponseHelp.sendData(proResult, req, res)
+        ResponseHelp.sendData(proResult, res)
     } catch (error) {
-        ResponseHelp.sendError("error:" + error, req, res)
+        ResponseHelp.sendError("error:" + error, res)
     }
 })
 
@@ -36,13 +36,13 @@ router.delete("/:id", async (req, res) => {
     try {
         const pro = await ProfessionService.findByIdAndDelete(req.params.id)
         if (!pro) {
-            ResponseHelp.sendError(`id[${req.params.id}]不存在`, req, res)
+            ResponseHelp.sendError(`id[${req.params.id}]不存在`, res)
             return
         }
         await DescriptionService.delete(pro.descID)
-        ResponseHelp.sendData(true, req, res)
+        ResponseHelp.sendData(true, res)
     } catch (error) {
-        ResponseHelp.sendError("error:" + error, req, res)
+        ResponseHelp.sendError("error:" + error, res)
     }
 })
 
@@ -61,12 +61,12 @@ router.put("/:id", async (req, res) => {
         const proResult = await ProfessionService.edit(id, pro)
         if (Array.isArray(proResult)) { errs.push(...proResult) }
         if (errs.length) {
-            ResponseHelp.sendError(errs, req, res)
+            ResponseHelp.sendError(errs, res)
         } else {
-            ResponseHelp.sendData(true, req, res)
+            ResponseHelp.sendData(true, res)
         }
     } catch (error) {
-        ResponseHelp.sendError(error, req, res)
+        ResponseHelp.sendError(error, res)
     }
 })
 
@@ -76,7 +76,7 @@ router.get("", async (req, res) => {
     try {
         const pros = await ProfessionService.find(req.query)
         if (pros.errors.length) {
-            ResponseHelp.sendError(pros.errors, req, res)
+            ResponseHelp.sendError(pros.errors, res)
             return
         }
 
@@ -93,10 +93,10 @@ router.get("", async (req, res) => {
             return obj
         })
         pros.data = nPros
-        ResponseHelp.sendPageData(pros, req, res)
+        ResponseHelp.sendPageData(pros, res)
 
     } catch (error) {
-        ResponseHelp.sendError("error" + error, req, res)
+        ResponseHelp.sendError("error" + error, res)
     }
 })
 
@@ -104,7 +104,7 @@ router.get("/:id", async (req, res) => {
     try {
         const pro = await ProfessionService.findById(req.params.id)
         if (!pro) {
-            ResponseHelp.sendError(`id[${req.params.id}]不存在`, req, res)
+            ResponseHelp.sendError(`id[${req.params.id}]不存在`, res)
             return
         }
         const { _id, proName, status } = pro
@@ -115,9 +115,9 @@ router.get("/:id", async (req, res) => {
             dept: await DepartmentService.findById(pro.deptID),
             desc: await DescriptionService.findById(pro.descID)
         }
-        ResponseHelp.sendData(obj, req, res)
+        ResponseHelp.sendData(obj, res)
     } catch (error) {
-        ResponseHelp.sendError(error, req, res)
+        ResponseHelp.sendError(error, res)
     }
 })
 

@@ -12,13 +12,13 @@ router.post("/", async (req, res) => {
     try {
         const result = await AdminService.add(req.body)
         if (Array.isArray(result)) {
-            ResponseHelp.sendError(result, req, res)
+            ResponseHelp.sendError(result, res)
         } else {
             result.pwd = pwdType
-            ResponseHelp.sendData(result, req, res)
+            ResponseHelp.sendData(result, res)
         }
     } catch (error) {
-        ResponseHelp.sendError("管理员账号必须唯一", req, res)
+        ResponseHelp.sendError("管理员账号必须唯一", res)
     }
 })
 
@@ -28,9 +28,9 @@ router.post("/", async (req, res) => {
 router.delete("/:adminNo", async (req, res) => {
     try {
         const result = await AdminService.delete(req.params.adminNo)
-        ResponseHelp.sendData("success", req, res)
+        ResponseHelp.sendData("success", res)
     } catch (error) {
-        ResponseHelp.sendError("账号错误", req, res)
+        ResponseHelp.sendError("账号错误", res)
     }
 })
 
@@ -42,12 +42,12 @@ router.put("/:adminNo", async (req, res) => {
         const { _id = "", adminNo = "", ...admin } = req.body
         const result = await AdminService.edit(req.params.adminNo, admin)
         if (Array.isArray(result)) {
-            ResponseHelp.sendError(result, req, res)
+            ResponseHelp.sendError(result, res)
         } else {
-            ResponseHelp.sendData(result, req, res)
+            ResponseHelp.sendData(result, res)
         }
     } catch (error) {
-        ResponseHelp.sendError("账号错误", req, res)
+        ResponseHelp.sendError("账号错误", res)
     }
 })
 
@@ -60,12 +60,12 @@ router.get("/:adminNo", async (req, res) => {
         const result = await AdminService.findByAccount(req.params.adminNo)
         if (result) {
             result.pwd = pwdType
-            ResponseHelp.sendData(result, req, res)
+            ResponseHelp.sendData(result, res)
         } else {
-            ResponseHelp.sendError("账号不存在", req, res)
+            ResponseHelp.sendError("账号不存在", res)
         }
     } catch (error) {
-        ResponseHelp.sendError("账号错误", req, res)
+        ResponseHelp.sendError("账号错误", res)
     }
 })
 
@@ -74,7 +74,7 @@ router.get("/:adminNo", async (req, res) => {
  */
 router.get("", async (req, res) => {
     const result = await AdminService.find(req.query)
-    ResponseHelp.sendPageData(result, req, res)
+    ResponseHelp.sendPageData(result, res)
 })
 
 export default router

@@ -56,6 +56,11 @@ export const pwdType = "******"
  */
 export const imgTypeArr: EImgType[] = [EImgType.avatar, EImgType.life, EImgType.travel]
 
+/**
+ * 公钥
+ */
+export const secretOrPrivateKey = "1234567890098765433"
+
 export {
     EStatus,
     ECrsStatus,

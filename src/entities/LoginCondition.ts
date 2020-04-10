@@ -12,11 +12,11 @@ export class LoginCondition extends BaseEntity {
 
     @Length(2, 60, { message: "账号长度在2~60之间" })
     @Type(() => String)
-    userName: string
+    username: string
 
     @Length(6, 60, { message: "密码长度在6~60之间" })
     @Type(() => String)
-    userPwd: string
+    password: string
 
     public static transform(plainObj: object) {
         return super.baseTransform(this, plainObj)

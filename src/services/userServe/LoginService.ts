@@ -13,18 +13,18 @@ export class LoginService {
             return errs
         }
 
-        const { userType, userName, userPwd } = loginCondition
+        const { userType, username, password } = loginCondition
 
         let result: IAdmin | IStudent | ITeacher | null
         switch (userType) {
             case EDBName.Admin:
-                result = await AdminService.loginFind(userName)
+                result = await AdminService.loginFind(username)
                 break;
             case EDBName.Stu:
-                result = await StudentService.loginFind(userName)
+                result = await StudentService.loginFind(username)
                 break;
             case EDBName.Tch:
-                result = await TeacherService.loginFind(userName)
+                result = await TeacherService.loginFind(username)
                 break;
             default:
                 return ["用户角色类型错误"]
@@ -32,7 +32,7 @@ export class LoginService {
 
         if (result) {
 
-            if(!await hashCompare(userPwd, result.pwd)) {
+            if(!await hashCompare(password, result.pwd)) {
                 return ["账号或密码错误 "]
             }
 

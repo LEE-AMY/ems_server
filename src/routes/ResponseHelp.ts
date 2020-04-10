@@ -1,27 +1,10 @@
-import { Response, Request } from "express";
-import { TCorsParams, ISearchResult } from "../types";
+import { Response } from "express"
+import { ISearchResult } from "../types"
 
-const defCors: TCorsParams = {
-    origin: "*",
-    headers: "Content-Type, Content-Length, Authorization, Accept, X-Requested-With",
-    methods: "PUT, POST, GET, DELETE, OPTIONS"
-}
 
 export class ResponseHelp {
 
-    private static pubResHead(req: Request, res: Response) {
-        const nCors = {
-            ...defCors,
-            origin: `${req.protocol}://${req.headers.host}`,
-            methods: req.method
-        }
-        res.header("Access-Control-Allow-Origin", nCors.origin)
-        res.header("Access-Control-Allow-Headers", nCors.headers)
-        res.header("Access-Control-Allow-Methods", nCors.methods)
-    }
-
-    public static sendError(error: string | string[], req: Request, res: Response) {
-        this.pubResHead(req, res)
+    public static sendError(error: string | string[], res: Response) {
         const err: string = Array.isArray(error) ? error.join(";") : error
         res.send({
             err,
@@ -29,21 +12,18 @@ export class ResponseHelp {
         })
     }
 
-    public static sendData(data: any, req: Request, res: Response) {
-        this.pubResHead(req, res)
+    public static sendData(data: any, res: Response) {
         res.send({
             err: null,
             data
         })
     }
 
-    public static sendPageData<T>(data: ISearchResult<T>, req: Request, res: Response) {
+    public static sendPageData<T>(data: ISearchResult<T>, res: Response) {
         if (data.errors.length) {
-            this.sendError(data.errors, req, res)
+            this.sendError(data.errors, res)
             return
         }
-
-        this.pubResHead(req, res)
         res.send({
             err: null,
             data: data.data,

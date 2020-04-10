@@ -10,21 +10,21 @@ router.post("", async (req, res) => {
     const desc = await DescriptionService.add(req.body.desc)
     try {
         if (Array.isArray(desc)) {
-            ResponseHelp.sendError(desc, req, res)
+            ResponseHelp.sendError(desc, res)
             return
         }
         const result = await BuildingService.add({ ...req.body, descID: desc._id })
         if (Array.isArray(result)) {
             DescriptionService.delete(desc._id)
-            ResponseHelp.sendError(result, req, res)
+            ResponseHelp.sendError(result, res)
             return
         }
-        ResponseHelp.sendData(result, req, res)
+        ResponseHelp.sendData(result, res)
     } catch (error) {
         if (!Array.isArray(desc)) {
             DescriptionService.delete(desc._id)
         }
-        ResponseHelp.sendError(error, req, res)
+        ResponseHelp.sendError(error, res)
     }
 })
 
@@ -33,14 +33,14 @@ router.delete("/:id", async (req, res) => {
         const id = req.params.id
         const result = await BuildingService.findByIdAndDelete(id)
         if (!result) {
-            ResponseHelp.sendError(`id[${id}]不存在`, req, res)
+            ResponseHelp.sendError(`id[${id}]不存在`, res)
             return
         } else {
             await DescriptionService.delete(result.descID)
         }
-        ResponseHelp.sendData(true, req, res)
+        ResponseHelp.sendData(true, res)
     } catch (error) {
-        ResponseHelp.sendError(error, req, res)
+        ResponseHelp.sendError(error, res)
     }
 })
 
@@ -49,21 +49,21 @@ router.get("/:id", async (req, res) => {
         const { id } = req.params
         const result = await BuildingService.findById(id)
         if (!result) {
-            ResponseHelp.sendError(`id[${id}]不存在`, req, res)
+            ResponseHelp.sendError(`id[${id}]不存在`, res)
             return
         }
         const { descID, ...nOther } = cloneObj(result)
         nOther.desc = await DescriptionService.findById(result.descID)
-        ResponseHelp.sendData(nOther, req, res)
+        ResponseHelp.sendData(nOther, res)
     } catch (error) {
-        ResponseHelp.sendError(error, req, res)
+        ResponseHelp.sendError(error, res)
     }
 })
 
 router.get("", async (req, res) => {
     const result = await BuildingService.find(req.query)
     if (result.errors.length) {
-        ResponseHelp.sendError(result.errors, req, res)
+        ResponseHelp.sendError(result.errors, res)
         return
     }
 
@@ -80,7 +80,7 @@ router.get("", async (req, res) => {
     })
 
     result.data = newBuilding
-    ResponseHelp.sendPageData(result, req, res)
+    ResponseHelp.sendPageData(result, res)
 })
 
 router.put("/:id", async (req, res) => {
@@ -88,7 +88,7 @@ router.put("/:id", async (req, res) => {
         const { _id, descID, desc, ...buildingBody } = req.body
         const building = await BuildingService.edit(req.params.id, buildingBody)
         if (Array.isArray(building) || building === null) {
-            ResponseHelp.sendError(building ? building : "建筑物id错误" + req.params.id, req, res)
+            ResponseHelp.sendError(building ? building : "建筑物id错误" + req.params.id, res)
             return
         }
         if (desc) {
@@ -96,9 +96,9 @@ router.put("/:id", async (req, res) => {
             await DescriptionService.edit(building.descID, nDesc)
         }
 
-        ResponseHelp.sendData(true, req, res)
+        ResponseHelp.sendData(true, res)
     } catch (error) {
-        ResponseHelp.sendError("建筑物id错误" + error, req, res)
+        ResponseHelp.sendError("建筑物id错误" + error, res)
     }
 })
 

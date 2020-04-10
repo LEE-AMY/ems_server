@@ -13,20 +13,20 @@ router.post("", async (req, res) => {
     try {
         const desc = await DescriptionService.add(req.body.desc)
         if (Array.isArray(desc)) {
-            ResponseHelp.sendError(desc, req, res)
+            ResponseHelp.sendError(desc, res)
             return
         }
         const dept = await DepartmentService.add({ ...req.body, descID: desc._id })
         if (Array.isArray(dept)) {
             await DescriptionService.delete(desc._id)
-            ResponseHelp.sendError(dept, req, res)
+            ResponseHelp.sendError(dept, res)
         } else {
             const { descID, ...nDept } = cloneObj(dept)
             nDept.desc = desc
-            ResponseHelp.sendData(nDept, req, res)
+            ResponseHelp.sendData(nDept, res)
         }
     } catch (error) {
-        ResponseHelp.sendError(error, req, res)
+        ResponseHelp.sendError(error, res)
     }
 })
 
@@ -38,14 +38,14 @@ router.delete("/:id", async (req, res) => {
         const id = req.params.id
         const dept = await DepartmentService.findByIdAndDelete(id)
         if (!dept) {
-            ResponseHelp.sendError(`id[${id}]不存在`, req, res)
+            ResponseHelp.sendError(`id[${id}]不存在`, res)
             return
         } else {
             await DescriptionService.delete(dept.descID)
         }
-        ResponseHelp.sendData(true, req, res)
+        ResponseHelp.sendData(true, res)
     } catch (error) {
-        ResponseHelp.sendError(error, req, res)
+        ResponseHelp.sendError(error, res)
     }
 })
 
@@ -58,14 +58,14 @@ router.get("/:id", async (req, res) => {
         const { id } = req.params
         const dept = await DepartmentService.findById(id)
         if (!dept) {
-            ResponseHelp.sendError(`id[${id}]不存在`, req, res)
+            ResponseHelp.sendError(`id[${id}]不存在`, res)
             return
         }
         const { descID, ...nDept } = cloneObj(dept)
         nDept.desc = await DescriptionService.findById(dept.descID)
-        ResponseHelp.sendData(nDept, req, res)
+        ResponseHelp.sendData(nDept, res)
     } catch (error) {
-        ResponseHelp.sendError(error, req, res)
+        ResponseHelp.sendError(error, res)
     }
 })
 
@@ -76,7 +76,7 @@ router.get("/:id", async (req, res) => {
 router.get("", async (req, res) => {
     const result = await DepartmentService.find(req.query)
     if (result.errors.length) {
-        ResponseHelp.sendError(result.errors, req, res)
+        ResponseHelp.sendError(result.errors, res)
         return
     }
 
@@ -93,7 +93,7 @@ router.get("", async (req, res) => {
     })
 
     result.data = newDept
-    ResponseHelp.sendPageData(result, req, res)
+    ResponseHelp.sendPageData(result, res)
 })
 
 /**
@@ -114,12 +114,12 @@ router.put("/:id", async (req, res) => {
         const deptResult = await DepartmentService.edit(id, dept)
         if (Array.isArray(deptResult)) { errs.push(...deptResult) }
         if (errs.length) {
-            ResponseHelp.sendError(errs, req, res)
+            ResponseHelp.sendError(errs, res)
         } else {
-            ResponseHelp.sendData(true, req, res)
+            ResponseHelp.sendData(true, res)
         }
     } catch (error) {
-        ResponseHelp.sendError(error, req, res)
+        ResponseHelp.sendError(error, res)
     }
 })
 

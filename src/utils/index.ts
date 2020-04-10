@@ -1,5 +1,7 @@
 import bcrypt from "bcrypt"
 import fs from "fs"
+import jwt from "jsonwebtoken"
+import { secretOrPrivateKey } from "../types"
 
 /**
  * 下划线转换驼峰
@@ -51,4 +53,25 @@ export function deleteFile(path) {
         }
         console.log(`删除${path}成功`)
     })
+}
+
+/**
+ * 获取token
+ * @param id
+ * @param username
+ */
+export function getToken(id: string, username: string) {
+    return jwt.sign({
+        username,
+        id
+    }, secretOrPrivateKey, {
+        // algorithm: "RS256",
+        expiresIn: 60 * 60 * 24
+    })
+}
+
+export function verifyToken(token: string) {
+    const result = jwt.verify(token, secretOrPrivateKey)
+    console.log(result)
+    return result
 }

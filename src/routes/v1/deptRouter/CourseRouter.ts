@@ -10,18 +10,18 @@ router.post("", async (req, res) => {
     try {
         const desc = await DescriptionService.add(req.body.desc)
         if (Array.isArray(desc)) {
-            ResponseHelp.sendError(desc, req, res)
+            ResponseHelp.sendError(desc, res)
             return
         }
         const result = await CourseService.add({ ...req.body, descID: desc._id })
         if (Array.isArray(result)) {
             await DescriptionService.delete(desc._id)
-            ResponseHelp.sendError(result, req, res)
+            ResponseHelp.sendError(result, res)
             return
         }
-        ResponseHelp.sendData(result, req, res)
+        ResponseHelp.sendData(result, res)
     } catch (error) {
-        ResponseHelp.sendError(error, req, res)
+        ResponseHelp.sendError(error, res)
     }
 })
 
@@ -30,14 +30,14 @@ router.delete("/:id", async (req, res) => {
         const id = req.params.id
         const course = await CourseService.findByIdAndDelete(id)
         if (!course) {
-            ResponseHelp.sendError(`id[${id}]不存在`, req, res)
+            ResponseHelp.sendError(`id[${id}]不存在`, res)
             return
         } else {
             await DescriptionService.delete(course.descID)
         }
-        ResponseHelp.sendData(true, req, res)
+        ResponseHelp.sendData(true, res)
     } catch (error) {
-        ResponseHelp.sendError(error, req, res)
+        ResponseHelp.sendError(error, res)
     }
 })
 
@@ -46,21 +46,21 @@ router.get("/:id", async (req, res) => {
         const { id } = req.params
         const course = await CourseService.findById(id)
         if (!course) {
-            ResponseHelp.sendError(`id[${id}]不存在`, req, res)
+            ResponseHelp.sendError(`id[${id}]不存在`, res)
             return
         }
         const { descID, ...nOther } = cloneObj(course)
         nOther.desc = await DescriptionService.findById(course.descID)
-        ResponseHelp.sendData(nOther, req, res)
+        ResponseHelp.sendData(nOther, res)
     } catch (error) {
-        ResponseHelp.sendError(error, req, res)
+        ResponseHelp.sendError(error, res)
     }
 })
 
 router.get("", async (req, res) => {
     const result = await CourseService.find(req.query)
     if (result.errors.length) {
-        ResponseHelp.sendError(result.errors, req, res)
+        ResponseHelp.sendError(result.errors, res)
         return
     }
 
@@ -77,7 +77,7 @@ router.get("", async (req, res) => {
     })
 
     result.data = newCourse
-    ResponseHelp.sendPageData(result, req, res)
+    ResponseHelp.sendPageData(result, res)
 })
 
 router.put("/:id", async (req, res) => {
@@ -85,7 +85,7 @@ router.put("/:id", async (req, res) => {
         const { _id, descID, desc, ...courseBody } = req.body
         const course = await CourseService.edit(req.params.id, courseBody)
         if (Array.isArray(course) || course === null) {
-            ResponseHelp.sendError(course ? course : "课程id错误", req, res)
+            ResponseHelp.sendError(course ? course : "课程id错误", res)
             return
         }
         if (desc) {
@@ -93,9 +93,9 @@ router.put("/:id", async (req, res) => {
             await DescriptionService.edit(course.descID, nDesc)
         }
 
-        ResponseHelp.sendData(true, req, res)
+        ResponseHelp.sendData(true, res)
     } catch (error) {
-        ResponseHelp.sendError("课程id错误", req, res)
+        ResponseHelp.sendError("课程id错误", res)
     }
 })
 

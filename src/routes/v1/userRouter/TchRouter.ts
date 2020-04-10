@@ -11,16 +11,16 @@ router.post("", async (req, res) => {
 
     const result = await createBaseInfo(baseInfo, desc)
     if (Array.isArray(result)) {
-        ResponseHelp.sendError(result, req, res)
+        ResponseHelp.sendError(result, res)
         return
     }
     const tch = await TeacherService.add({ ...other, infID: result })
     if (Array.isArray(tch)) {
-        ResponseHelp.sendError(tch, req, res)
+        ResponseHelp.sendError(tch, res)
         return
     }
 
-    ResponseHelp.sendData(tch, req, res)
+    ResponseHelp.sendData(tch, res)
 })
 
 router.delete("/:id", async (req, res) => {
@@ -28,7 +28,7 @@ router.delete("/:id", async (req, res) => {
         const id = req.params.id
         const tch = await TeacherService.findOneAndDelete(id)
         if (!tch) {
-            ResponseHelp.sendError(`工号[${id}]不存在`, req, res)
+            ResponseHelp.sendError(`工号[${id}]不存在`, res)
             return
         }
 
@@ -40,9 +40,9 @@ router.delete("/:id", async (req, res) => {
             }
         }
 
-        ResponseHelp.sendData(true, req, res)
+        ResponseHelp.sendData(true, res)
     } catch (error) {
-        ResponseHelp.sendError(error, req, res)
+        ResponseHelp.sendError(error, res)
     }
 })
 
@@ -52,11 +52,11 @@ router.put("/:id", async (req, res) => {
         const { desc = {}, baseInfo = {}, infID, _id, _index, tchNo, ...other } = req.body
         const tch = await TeacherService.edit(id, other)
         if (Array.isArray(tch) || tch === null) {
-            ResponseHelp.sendError(tch ? tch : `工号[${id}]不存在`, req, res)
+            ResponseHelp.sendError(tch ? tch : `工号[${id}]不存在`, res)
             return
         }
         if (Object.keys(baseInfo).length === 0 && Object.keys(desc).length === 0) {
-            ResponseHelp.sendData(true, req, res)
+            ResponseHelp.sendData(true, res)
             return
         }
 
@@ -64,25 +64,25 @@ router.put("/:id", async (req, res) => {
             const { _id: _, descID, ...nBaseInfo } = baseInfo
             const ub = await UserBaseService.edit(tch.infID, nBaseInfo)
             if (Array.isArray(ub) || ub === null) {
-                ResponseHelp.sendError(ub ? ub : `baseInfo id[${tch.infID}]不存在`, req, res)
+                ResponseHelp.sendError(ub ? ub : `baseInfo id[${tch.infID}]不存在`, res)
                 return
             }
             const { _id: __, ...nDesc } = desc
             DescriptionService.edit(ub.descID, nDesc)
-            ResponseHelp.sendData(true, req, res)
+            ResponseHelp.sendData(true, res)
             return
         }
 
         const result = await createBaseInfo(baseInfo, desc)
         if (Array.isArray(result)) {
-            ResponseHelp.sendError(result, req, res)
+            ResponseHelp.sendError(result, res)
             return
         }
 
         TeacherService.edit(id, { infID: result } as any)
-        ResponseHelp.sendData(true, req, res)
+        ResponseHelp.sendData(true, res)
     } catch (error) {
-        ResponseHelp.sendError(error, req, res)
+        ResponseHelp.sendError(error, res)
     }
 })
 
@@ -91,7 +91,7 @@ router.get("/:id", async (req, res) => {
         const stuNo = req.params.id
         const tch = await TeacherService.findByAccount(stuNo)
         if (!tch) {
-            ResponseHelp.sendError(`工号[${stuNo}]不存在`, req, res)
+            ResponseHelp.sendError(`工号[${stuNo}]不存在`, res)
             return
         }
 
@@ -109,15 +109,15 @@ router.get("/:id", async (req, res) => {
         nStu.baseInfo = ub ? ub : {}
         nStu.desc = desc ? desc : {}
 
-        ResponseHelp.sendData(nStu, req, res)
+        ResponseHelp.sendData(nStu, res)
     } catch (error) {
-        ResponseHelp.sendError(error, req, res)
+        ResponseHelp.sendError(error, res)
     }
 })
 
 router.get("", async (req, res) => {
     const tchArr = await TeacherService.find(req.query)
-    ResponseHelp.sendPageData(tchArr, req, res)
+    ResponseHelp.sendPageData(tchArr, res)
 })
 
 export default router

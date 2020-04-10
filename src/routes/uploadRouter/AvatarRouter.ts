@@ -37,7 +37,7 @@ const upload = multer({
 router.post("/:id", (req, res) => {
     upload(req, res, async err => {
         if (err) {
-            ResponseHelp.sendError(err, req, res)
+            ResponseHelp.sendError(err, res)
             return
         }
         const url = `${diskPath}/${req.file.filename}`
@@ -53,16 +53,16 @@ router.post("/:id", (req, res) => {
 
             if (Array.isArray(result)) {
                 deleteFile(`${destination}/${req.file.filename}`)
-                ResponseHelp.sendError(result, req, res)
+                ResponseHelp.sendError(result, res)
                 return
             }
 
             const obj = cloneObj(result)
             obj.url = url
-            ResponseHelp.sendData(obj, req, res)
+            ResponseHelp.sendData(obj, res)
         } catch (error) {
             deleteFile(`${destination}/${req.file.filename}`)
-            ResponseHelp.sendError(`id[${req.params.id}]错误`, req, res)
+            ResponseHelp.sendError(`id[${req.params.id}]错误`, res)
         }
     })
 })

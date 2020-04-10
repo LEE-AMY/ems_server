@@ -15,7 +15,7 @@ router.use("/pub", PubRouter)
 
 
 router.get("/role", (req, res) => {
-    ResponseHelp.sendData(roleCN, req, res)
+    ResponseHelp.sendData(roleCN, res)
 })
 
 
