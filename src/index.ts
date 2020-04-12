@@ -1,5 +1,5 @@
 import "reflect-metadata"
-import Express, { Response } from "express"
+import Express from "express"
 import morgan from "morgan"
 import { createStream } from "rotating-file-stream"
 import path from "path"
@@ -7,7 +7,6 @@ import cookieParser from "cookie-parser"
 import apiRout from "./routes"
 import expressJWT from "express-jwt"
 import { secretOrPrivateKey } from "./types"
-import { verifyToken } from "./utils"
 
 const port = 9527
 const app = Express()
@@ -16,21 +15,14 @@ const accessLogStream = createStream("access.log", {
     path: path.join(__dirname, "../log")
 })
 
-// app.all("*", (req, res, next) => {
-//     // console.log(req, res, next)
-//     // req.baseUrl
-//     // console.log
-//     console.log(req.headers['x-access-token'])
-//     console.log(req.url)
-//     next()
-// })
-
+/**
+ * 验证token
+ */
 app.use(expressJWT({
     secret: secretOrPrivateKey,
-    credentialsRequired: false,
+    credentialsRequired: true,
+    requestProperty: "ems",
     getToken: (req) => {
-        console.log('234567890-')
-        console.log(req.headers['x-access-token'])
         if (req.headers['x-access-token']) {
             return req.headers['x-access-token']
         } else if (req.query.token) {
@@ -39,30 +31,15 @@ app.use(expressJWT({
         return null
     }
 }).unless({
-    path: ["/api/v1/user/login"]
+    path: ["/api/v1/user/login/admin"]
 }))
 
-app.use((req, res, next) => {
-    // const token = req.headers["x-access-token"]
-    // // if(token)
-    // console.log(token)
-    // verifyToken(token as string)
-    // next()
-    // tslint:disable-next-line:no-string-literal
-    const r = req['user']
-    console.log("req=>", r)
-    if (r) {
-        next()
-    } else {
-        res.send("没有登陆")
-    }
-    // console.log("req=>", req['user'])
-    // next()
-})
-
+/**
+ * 验证token 判断通不过的在此处理
+ */
 app.use((err, req, res, next) => {
     console.log(err)
-    res.send("error")
+    res.status(401).send("invalid token...")
 })
 
 app.use(morgan("combined", { stream: accessLogStream }))

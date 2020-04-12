@@ -59,7 +59,7 @@ export const imgTypeArr: EImgType[] = [EImgType.avatar, EImgType.life, EImgType.
 /**
  * 公钥
  */
-export const secretOrPrivateKey = "1234567890098765433"
+export const secretOrPrivateKey = "^Educational@Management#System&"
 
 export {
     EStatus,

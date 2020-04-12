@@ -66,7 +66,7 @@ export function getToken(id: string, username: string) {
         id
     }, secretOrPrivateKey, {
         // algorithm: "RS256",
-        expiresIn: 60 * 60 * 24
+        expiresIn: 60
     })
 }
 
